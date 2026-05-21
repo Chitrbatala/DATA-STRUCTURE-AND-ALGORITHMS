@@ -1,0 +1,47 @@
+class Solution {
+    public String sortVowels(String s) {
+        char[] vowels = {'A', 'E', 'I', 'O', 'U',
+                         'a', 'e', 'i', 'o', 'u'};
+
+        StringBuilder collectedVowels = new StringBuilder();
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+
+            for (int j = 0; j < vowels.length; j++) {
+                if (ch == vowels[j]) {
+                    collectedVowels.append(ch);
+                }
+            }
+        }
+
+        char[] arr = collectedVowels.toString().toCharArray();
+
+        Arrays.sort(arr);
+
+        StringBuilder ans = new StringBuilder();
+
+        int index = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+
+            boolean isVowel = false;
+
+            for (int j = 0; j < vowels.length; j++) {
+                if (ch == vowels[j]) {
+                    isVowel = true;
+                    break;
+                }
+            }
+
+            if (isVowel) {
+                ans.append(arr[index]);
+                index++;
+            } else {
+                ans.append(ch);
+            }
+        }
+        return ans.toString();
+    }
+}
