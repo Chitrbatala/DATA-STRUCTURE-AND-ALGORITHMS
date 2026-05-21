@@ -1,0 +1,39 @@
+class Solution {
+    public static String caseSort(String s) {
+        StringBuilder upper = new StringBuilder();
+        StringBuilder lower = new StringBuilder();
+        
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            
+            if (Character.isUpperCase(ch)) {
+                upper.append(ch);
+            } else {
+                lower.append(ch);
+            }
+        }
+        
+        char[] upperSorted = upper.toString().toCharArray();
+        char[] lowerSorted = lower.toString().toCharArray();
+        Arrays.sort(upperSorted);
+        Arrays.sort(lowerSorted);
+        int upperIndex = 0;
+        int lowerIndex = 0;
+        
+        StringBuilder ans = new StringBuilder();
+        
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            
+            if (Character.isUpperCase(ch)) {
+                ans.append(upperSorted[upperIndex]);
+                upperIndex++;
+            } else {
+                ans.append(lowerSorted[lowerIndex]);
+                lowerIndex++;
+            }
+        }
+        
+        return ans.toString();
+    }
+}
