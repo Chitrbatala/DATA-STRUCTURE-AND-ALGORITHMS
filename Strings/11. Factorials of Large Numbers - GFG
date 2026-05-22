@@ -1,0 +1,31 @@
+import java.math.BigInteger;
+class Solution {
+    public static ArrayList<Integer> factorial(int n) {
+        
+        BigInteger fact = BigInteger.ONE;
+        
+        ArrayList<Integer> res = new ArrayList<>();
+        
+        if (n == 0 || n == 1) {
+            res.add(1);
+            return res;
+        }
+        
+        while (n > 0) {
+            fact = fact.multiply(BigInteger.valueOf(n));
+            n--;
+        }
+        
+        String str = fact.toString();
+        
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            
+            int digit = ch - '0';
+            
+            res.add(digit);
+        }
+        
+        return res;
+    }
+}
