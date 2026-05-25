@@ -1,0 +1,79 @@
+// User function Template for Java
+
+class Solution {
+    public int findSubString(String str) {
+        // code here
+        int n = str.length();
+        
+        HashSet<Character> unique = new HashSet<>();
+        
+        for (int i = 0; i < n; i++) {
+            char ch = str.charAt(i);
+            unique.add(ch);
+        }
+        
+        int required = unique.size();
+        
+        int[] arr = new int[256];
+        
+        int left = 0;
+        int formed = 0;
+        int minLength = Integer.MAX_VALUE;
+        
+        for (int right = 0; right < n; right++) {
+            char ch = str.charAt(right);
+            
+            arr[ch]++;
+            
+            if (arr[ch] == 1) {
+                formed++;
+            }
+            
+            while (formed == required) {
+                int windowLength = right - left + 1;
+                minLength = Math.min(minLength, windowLength);
+                
+                char leftChar = str.charAt(left);
+                arr[leftChar]--;
+                
+                if (arr[leftChar] == 0) {
+                    formed--;
+                }
+                left++;
+            }
+        }
+        return minLength;
+        
+    }
+}
+
+//         int n = str.length();
+        
+//         HashSet<Character> unique = new HashSet<>();
+        
+//         for (int i = 0; i < n; i++) {
+//             char ch = str.charAt(i);
+//             unique.add(ch);
+//         }
+        
+//         int required = unique.size();
+        
+//         int minLength = Integer.MAX_VALUE;
+        
+//         for (int i = 0; i < n; i++) {
+//             HashSet<Character> currSet = new HashSet<>();
+            
+//             for (int j = i; j < n; j++) {
+//                 char ch = str.charAt(j);
+                
+//                 currSet.add(ch);
+                
+//                 if (currSet.size() == required) {
+//                     int length = j - i + 1;
+                    
+//                     minLength = Math.min(minLength, length);
+//                     break;
+//                 }
+//             }
+//         }
+//         return minLength;
