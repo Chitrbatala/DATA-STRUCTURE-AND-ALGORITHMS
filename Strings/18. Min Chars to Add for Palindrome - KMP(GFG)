@@ -1,0 +1,57 @@
+class Solution {
+    public int minChar(String s) {
+       String rev = new StringBuilder(s).reverse().toString();
+       String temp = s + "$" + rev;
+       
+       int n = temp.length();
+       int[] lps = new int[n];
+       
+       int pre = 0;
+       int suff = 1;
+       
+       while (suff < n) {
+           if (temp.charAt(pre) == temp.charAt(suff)) {
+               lps[suff] = pre + 1;
+               pre++;
+               suff++;
+           } else {
+               if (pre == 0) {
+                   lps[suff] = 0;
+                   suff++;
+               } else {
+                   pre = lps[pre - 1];
+               }
+           }
+       }
+       
+       int longestPalindromicPrefix = lps[n - 1];
+       
+       return s.length() - longestPalindromicPrefix;
+    }
+}
+
+
+
+//  int n = s.length();
+//         int longestPalindromePrefix = 0;
+        
+//         for (int i = n - 1; i >= 0; i--) {
+//             if (isPalindrome(s, 0, i)) {
+//                 longestPalindromePrefix = i + 1;
+//                 break;
+//             }
+//         }
+//         int remainingChars = n - longestPalindromePrefix;
+        
+//         return remainingChars;
+
+//     }
+//     public boolean isPalindrome(String s, int left, int right) {
+//         while (left <= right) {
+//             if (s.charAt(left) != s.charAt(right)) {
+//                 return false;
+//             }
+//             left++;
+//             right--;
+//         }
+//         return true;
