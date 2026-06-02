@@ -1,0 +1,20 @@
+class Solution {
+    void printNos(int n) {
+        helper(1, n);
+    }
+    private void helper(int curr, int n) {
+        if (curr > n) {
+            return;
+        }
+        helper(curr + 1, n);
+        System.out.print(curr + " ");
+    }
+}
+
+
+        // Recursion
+        // if (n == 0) {
+        //     return;
+        // }
+        // System.out.print(n + " ");
+        // printNos(n - 1);
