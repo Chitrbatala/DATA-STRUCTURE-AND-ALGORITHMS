@@ -1,0 +1,21 @@
+// User function Template for Java
+
+class Solution {
+    static int sumOfNaturals(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        return n + sumOfNaturals(n - 1);
+    }
+};
+
+
+    // int ans = helper(n, 0);
+    //     return ans;
+        
+    // }
+    // private static int helper(int i, int sum) {
+    //     if (i < 1) {
+    //         return sum;
+    //     }
+    //     return helper(i - 1, sum + i);
