@@ -1,0 +1,14 @@
+class Solution {
+    boolean isPalindrome(String s) {
+        return palindrome(s, 0);
+    }
+    private boolean palindrome(String s, int i) {
+        if (i >= s.length() / 2) {
+            return true;
+        }
+        if (s.charAt(i) != s.charAt(s.length() - i - 1)) {
+            return false;
+        }
+        return palindrome(s, i + 1);
+    }
+}
