@@ -1,0 +1,15 @@
+class Solution {
+    public boolean checkSubsequenceSum(int[] arr, int k) {
+        return helper(arr, k, 0, 0);
+    }
+    public boolean helper(int[] arr, int k, int ind, int sum) {
+        if (ind == arr.length) {
+            return sum == k;
+        }
+        
+        boolean pick = helper(arr, k, ind + 1, sum + arr[ind]);
+        boolean notPick = helper(arr, k, ind + 1, sum);
+        
+        return pick || notPick;
+    }
+}
