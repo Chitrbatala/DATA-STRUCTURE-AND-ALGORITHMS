@@ -1,0 +1,22 @@
+class Solution {
+    public ArrayList<Integer> subsetSums(int[] arr) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        solve(arr, 0, 0, ans);
+        
+        return ans;
+        
+    }
+    private void solve(int[] arr, int index, int currSum, List<Integer> ans) {
+        if (index == arr.length) {
+            ans.add(currSum);
+            return;
+        }
+        
+        // take
+        solve(arr, index + 1, currSum + arr[index], ans);
+        
+        // not take
+        solve(arr, index + 1, currSum, ans);
+        
+    }
+}
