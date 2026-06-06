@@ -1,0 +1,63 @@
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+
+        List<Integer> curr = new ArrayList<>();
+        List<List<Integer>> ans = new ArrayList<>();
+
+        solve(candidates, 0, target, curr, ans);
+        return ans;
+    }
+    private void solve(int[] arr, int index, int target, List<Integer> curr, List<List<Integer>> ans) {
+        if (target == 0) {
+            ans.add(new ArrayList<>(curr));
+            return;
+        }
+
+        if (index == arr.length) {
+            return;
+        }
+
+        for (int i = index; i < arr.length; i++) {
+            if (i > index && arr[i] == arr[i - 1]) continue;
+            if (arr[i] > target) break;
+
+            curr.add(arr[i]);
+            solve(arr, i + 1, target - arr[i], curr, ans);
+            curr.remove(curr.size() - 1);
+        }
+    }
+}
+
+                // BRUTE FORCE
+
+    //     Arrays.sort(candidates);
+
+    //     Set<List<Integer>> ans = new HashSet<>();
+    //     List<Integer> curr = new ArrayList<>();
+
+    //     solve(0, candidates, target, curr, ans);
+
+    //     return new ArrayList<>(ans);
+    // }
+
+    // private void solve(int index, int[] arr, int target, List<Integer> curr, Set<List<Integer>> ans) {
+
+    //     if (target == 0) {
+    //         ans.add(new ArrayList<>(curr));
+    //         return;
+    //     }
+
+    //     if (index == arr.length) {
+    //         return;
+    //     }
+
+    //     // Pick
+    //     if (arr[index] <= target) {
+    //         curr.add(arr[index]);
+    //         solve(index + 1, arr, target - arr[index], curr, ans);
+    //         curr.remove(curr.size() - 1);
+    //     }
+
+    //     // Not Pick
+    //     solve(index + 1, arr, target, curr, ans);
