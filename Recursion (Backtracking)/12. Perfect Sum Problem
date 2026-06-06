@@ -1,0 +1,18 @@
+class Solution {
+    public int perfectSum(int[] nums, int target) {
+        return solve(nums, 0, target);
+    }
+    private int solve(int[] arr, int index, int target) {
+        if (index == arr.length) {
+            return target == 0? 1 : 0;
+        }
+        
+        int notTake = solve(arr, index + 1, target);
+        
+        int take = 0;
+        
+        take = solve(arr, index + 1, target - arr[index]);
+        
+        return take + notTake;
+    }
+}
