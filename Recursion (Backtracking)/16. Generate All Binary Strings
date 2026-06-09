@@ -1,0 +1,17 @@
+class Solution {
+    public ArrayList<String> binstr(int n) {
+        ArrayList<String> ans = new ArrayList<>();
+        
+        backTrack(n, "", ans);
+        return ans;
+    }
+    private void backTrack(int n, String curr, ArrayList<String> ans) {
+        if (n == 0) {
+            ans.add(curr);
+            return;
+        }
+        
+        backTrack(n - 1, curr + "0", ans);
+        backTrack(n - 1, curr + "1", ans);
+    }
+}
