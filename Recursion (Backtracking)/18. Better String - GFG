@@ -1,0 +1,38 @@
+class Solution {
+
+    private static int countDistinct(String s) {
+        HashSet<String> set = new HashSet<>();
+
+        solve(s, 0, new StringBuilder(), set);
+
+        return set.size() - 1; // exclude empty subsequence
+    }
+
+    private static void solve(String s, int index,
+                              StringBuilder curr,
+                              HashSet<String> set) {
+
+        if (index == s.length()) {
+            set.add(curr.toString());
+            return;
+        }
+
+        // Not Take
+        solve(s, index + 1, curr, set);
+
+        // Take
+        curr.append(s.charAt(index));
+        solve(s, index + 1, curr, set);
+
+        // Backtrack
+        curr.deleteCharAt(curr.length() - 1);
+    }
+
+    public static String betterString(String s1, String s2) {
+
+        int count1 = countDistinct(s1);
+        int count2 = countDistinct(s2);
+
+        return count1 >= count2 ? s1 : s2;
+    }
+}
