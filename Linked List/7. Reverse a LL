@@ -1,0 +1,41 @@
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode temp = head;
+
+        while (temp != null) {
+            ListNode front = temp.next;
+            temp.next = prev;
+            prev = temp;
+            temp = front;
+        }
+        return prev;
+    }
+}
+
+// Stack<Integer> stack = new Stack<>();
+//         ListNode temp = head;
+
+//         while (temp != null) {
+//             stack.push(temp.val);
+//             temp = temp.next;
+//         }
+
+//         temp = head;
+//         while (temp != null) {
+//             temp.val = stack.pop();
+//             temp = temp.next;
+//         }
+//         return head;
+
+// RECURSIVE APPROACH
+
+        //Base case
+        // if (head == null || head.next == null) {
+        //     return head;
+        // }
+        // ListNode newHead = reverseList(head.next);
+        // ListNode front = head.next;
+        // front.next = head;
+        // head.next = null;
+        // return newHead;
