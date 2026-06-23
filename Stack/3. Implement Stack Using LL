@@ -1,0 +1,39 @@
+class myStack {
+    Node top;
+    int count;
+    
+    public myStack() {
+        top = null;
+        count = 0;
+    }
+
+    public boolean isEmpty() {
+        return top == null;
+    }
+
+    public void push(int x) {
+        Node temp = new Node(x);
+        temp.next = top;
+        top = temp;
+        count++;
+    }
+
+    public void pop() {
+        if (isEmpty()) {
+            return;
+        }
+        top = top.next;
+        count--;
+    }
+
+    public int peek() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return top.data;
+    }
+
+    public int size() {
+        return count;
+    }
+}
