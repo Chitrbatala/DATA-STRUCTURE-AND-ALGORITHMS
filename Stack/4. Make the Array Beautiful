@@ -1,0 +1,17 @@
+class Solution {
+    List<Integer> makeBeautiful(int[] arr) {
+        Stack<Integer> st = new Stack<>();
+        
+        for (int num : arr) {
+            if (st.isEmpty()) {
+                st.push(num);
+            } else if ((st.peek() >= 0 && num >= 0) || (st.peek() < 0 && num < 0)) {
+                st.push(num);
+            } else {
+                st.pop();
+            }
+        }
+        return new ArrayList<>(st);
+        
+    }
+}
