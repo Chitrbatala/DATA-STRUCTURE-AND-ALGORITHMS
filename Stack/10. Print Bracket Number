@@ -1,0 +1,21 @@
+class Solution {
+    ArrayList<Integer> bracketNumbers(String s) {
+        Stack<Integer> st = new Stack<>();
+        List<Integer> arr = new ArrayList<>();
+        
+        int count = 0;
+        
+        for (char ch : s.toCharArray()) {
+            if (ch == '(') {
+                count++;
+                st.push(count);
+                arr.add(count);
+            } else if (ch == ')') {
+                arr.add(st.peek());
+                st.pop();
+            }
+        }
+        return new ArrayList<>(arr);
+        
+    }
+};
