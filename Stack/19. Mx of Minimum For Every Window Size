@@ -1,0 +1,143 @@
+class Solution {
+    public ArrayList<Integer> maxOfMins(int[] arr) {
+
+        int n = arr.length;
+        Stack<Integer> st = new Stack<>();
+
+        int[] ans = new int[n];
+        Arrays.fill(ans, 0);
+
+        for (int i = 0; i < n; i++) {
+
+            while (!st.isEmpty() && arr[st.peek()] >= arr[i]) {
+
+                int index = st.pop();
+
+                int range;
+
+                if (st.isEmpty()) {
+                    range = i;
+                } else {
+                    range = i - st.peek() - 1;
+                }
+
+                ans[range - 1] = Math.max(ans[range - 1], arr[index]);
+            }
+
+            st.push(i);
+        }
+
+        while (!st.isEmpty()) {
+
+            int index = st.pop();
+
+            int range;
+
+            if (st.isEmpty()) {
+                range = n;
+            } else {
+                range = n - st.peek() - 1;
+            }
+
+            ans[range - 1] = Math.max(ans[range - 1], arr[index]);
+        }
+
+        for (int i = n - 2; i >= 0; i--) {
+            ans[i] = Math.max(ans[i], ans[i + 1]);
+        }
+
+        ArrayList<Integer> res = new ArrayList<>();
+
+        for (int x : ans)
+            res.add(x);
+
+        return res;
+    }
+}
+
+
+        // int n = arr.length;
+
+        // int[] prev = new int[n];
+        // int[] next = new int[n];
+
+        // Stack<Integer> st = new Stack<>();
+
+        // // Previous Smaller
+        // for (int i = 0; i < n; i++) {
+
+        //     while (!st.isEmpty() && arr[st.peek()] >= arr[i]) {
+        //         st.pop();
+        //     }
+
+        //     if (st.isEmpty())
+        //         prev[i] = -1;
+        //     else
+        //         prev[i] = st.peek();
+
+        //     st.push(i);
+        // }
+
+        // st.clear();
+
+        // // Next Smaller
+        // for (int i = n - 1; i >= 0; i--) {
+
+        //     while (!st.isEmpty() && arr[st.peek()] >= arr[i]) {
+        //         st.pop();
+        //     }
+
+        //     if (st.isEmpty())
+        //         next[i] = n;
+        //     else
+        //         next[i] = st.peek();
+
+        //     st.push(i);
+        // }
+
+        // int[] ans = new int[n];
+        // Arrays.fill(ans, Integer.MIN_VALUE);
+
+        // // Fill answer
+        // for (int i = 0; i < n; i++) {
+
+        //     int length = next[i] - prev[i] - 1;
+
+        //     ans[length - 1] = Math.max(ans[length - 1], arr[i]);
+        // }
+
+        // // Fill remaining entries
+        // for (int i = n - 2; i >= 0; i--) {
+        //     ans[i] = Math.max(ans[i], ans[i + 1]);
+        // }
+
+        // ArrayList<Integer> res = new ArrayList<>();
+
+        // for (int x : ans)
+        //     res.add(x);
+
+        // return res;
+
+        // int n = arr.length;
+        // ArrayList<Integer> ans = new ArrayList<>();
+        
+
+        // for (int k = 1; k <= n; k++) {
+        //     int maxOfMin = Integer.MIN_VALUE;
+            
+        //     int s = 0;
+        //     int e = k - 1;
+            
+        //     while (e < n) {
+        //         int minimum = Integer.MAX_VALUE;
+                
+        //         for (int i = s; i <= e; i++) {
+        //             minimum = Math.min(minimum, arr[i]);
+        //         }
+        //         maxOfMin = Math.max(minimum, maxOfMin);
+        //         s++;
+        //         e++;
+        //     }
+        //     ans.add(maxOfMin);
+        // }
+        // return ans;
