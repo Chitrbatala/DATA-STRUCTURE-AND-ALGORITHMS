@@ -1,0 +1,67 @@
+// Node class
+class Node {
+    int data;
+    Node next;
+
+    Node(int new_data) {
+        data = new_data;
+        next = null;
+    }
+}
+
+// Queue class
+class myQueue {
+    Node start;
+    Node end;
+    int size;
+
+    public myQueue() {
+        start = null;
+        end = null;
+        size = 0;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public void enqueue(int x) {
+        Node temp = new Node(x);
+
+        if (start == null) {
+            start = end = temp;
+        } else {
+            end.next = temp;
+            end = temp;
+        }
+
+        size++;
+    }
+
+    public void dequeue() {
+        if (start == null) {
+            return;
+        }
+
+        start = start.next;
+
+        // If queue becomes empty
+        if (start == null) {
+            end = null;
+        }
+
+        size--;
+    }
+
+    public int getFront() {
+        if (start == null) {
+            return -1;
+        }
+
+        return start.data;
+    }
+
+    public int size() {
+        return size;
+    }
+}
