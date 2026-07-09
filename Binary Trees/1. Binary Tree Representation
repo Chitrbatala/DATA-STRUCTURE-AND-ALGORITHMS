@@ -1,0 +1,28 @@
+class Solution {
+    public Node buildTree(List<Integer> nodes) {
+        if (nodes == null || nodes.size() == 0)
+            return null;
+
+        int n = nodes.size();
+
+        // Create all nodes
+        Node[] tree = new Node[n];
+        for (int i = 0; i < n; i++) {
+            tree[i] = new Node(nodes.get(i));
+        }
+
+        // Connect children
+        for (int i = 0; i < n; i++) {
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+
+            if (left < n)
+                tree[i].left = tree[left];
+
+            if (right < n)
+                tree[i].right = tree[right];
+        }
+
+        return tree[0];
+    }
+}
