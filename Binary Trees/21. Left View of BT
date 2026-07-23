@@ -1,0 +1,19 @@
+class Solution {
+    public ArrayList<Integer> leftView(Node root) {
+        // code here
+        ArrayList<Integer> ans = new ArrayList<>();
+        dfs(root, 0, ans);
+        return ans;
+    }
+    public void dfs(Node node, int level, List<Integer> ans) {
+        if (node == null) {
+            return;
+        }
+        
+        if (level == ans.size()) {
+            ans.add(node.data);
+        }
+        dfs(node.left, level + 1, ans);
+        dfs(node.right, level + 1, ans);
+    }
+}
