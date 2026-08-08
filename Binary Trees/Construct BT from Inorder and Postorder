@@ -1,0 +1,62 @@
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+
+        Map<Integer, Integer> inMap = new HashMap<>();
+
+        for (int i = 0; i < inorder.length; i++) {
+            inMap.put(inorder[i], i);
+        }
+
+        return buildTree(
+            postorder, 0, postorder.length - 1,
+            inorder, 0, inorder.length - 1,
+            inMap
+        );
+    }
+
+    private TreeNode buildTree(
+        int[] postorder, int ps, int pe,
+        int[] inorder, int is, int ie,
+        Map<Integer, Integer> inMap
+    ) {
+
+        if (ps > pe || is > ie) {
+            return null;
+        }
+
+        // Root = last element of postorder
+        int rootVal = postorder[pe];
+
+        TreeNode root = new TreeNode(rootVal);
+
+        // Find root in inorder
+        int inRoot = inMap.get(rootVal);
+
+        // Number of nodes in left subtree
+        int numsLeft = inRoot - is;
+
+        // Build left subtree
+        root.left = buildTree(
+            postorder,
+            ps,
+            ps + numsLeft - 1,
+            inorder,
+            is,
+            inRoot - 1,
+            inMap
+        );
+
+        // Build right subtree
+        root.right = buildTree(
+            postorder,
+            ps + numsLeft,
+            pe - 1,
+            inorder,
+            inRoot + 1,
+            ie,
+            inMap
+        );
+
+        return root;
+    }
+}
