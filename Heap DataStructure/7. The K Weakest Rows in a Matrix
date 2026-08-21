@@ -1,0 +1,143 @@
+class Solution {
+    class Row {
+        int index;
+        int soldiers;
+
+        Row(int index, int soldiers) {
+            this.index = index;
+            this.soldiers = soldiers;
+        }
+    }
+    public int[] kWeakestRows(int[][] mat, int k) {
+        PriorityQueue<Row> maxHeap = new PriorityQueue<>(
+            (a, b) -> {
+                if (a.soldiers == b.soldiers) {
+                    return b.index - a.index;
+                }
+
+                return b.soldiers - a.soldiers;
+            }
+        );
+
+        for (int i = 0; i < mat.length; i++) {
+            int soldiers = countSoldiers(mat[i]);
+
+            maxHeap.offer(new Row(i, soldiers));
+
+            if (maxHeap.size() > k) {
+                maxHeap.poll();
+            }
+        }
+
+        int[] ans = new int[k];
+
+        for (int i = k - 1; i >= 0; i--) {
+            ans[i] = maxHeap.poll().index;
+        }
+
+        return ans;
+
+    }
+    private int countSoldiers(int[] row) {
+        int l = 0;
+        int r = row.length - 1;
+
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+
+            if (row[mid] == 1) {
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return l;
+    }
+}
+
+        // int m = mat.length;
+        // int n = mat[0].length;
+
+        // Map<Integer, Integer> map = new HashMap<>();
+
+        // for (int i = 0; i < m; i++) {
+        //     int soldiers = 0;
+
+        //     for (int j = 0; j < n; j++) {
+        //         if (mat[i][j] == 1) {
+        //             soldiers++;
+        //         }
+        //     }
+
+        //     map.put(i, soldiers);
+        // }
+
+        // Integer[] rows = new Integer[m];
+
+        // for (int i = 0; i < m; i++) {
+        //     rows[i] = i;
+        // }
+
+        // //    Sort rows according to:
+        // //    first -> number of soldiers
+        // //    second -> row index
+        // Arrays.sort(rows, (a, b) -> {
+        //     if (map.get(a).equals(map.get(b))) {
+        //         return a - b;
+        //     }
+
+        //     return map.get(a) - map.get(b);
+        // });
+
+        // int[] ans = new int[k];
+
+        // for (int i = 0; i < k; i++) {
+        //     ans[i] = rows[i];
+        // }
+
+        // return ans;
+
+    //     int m = mat.length;
+
+    //     Map<Integer, Integer> map = new HashMap<>();
+
+    //     for (int i = 0; i < m; i++) {
+    //         int soldiers = countSoldiers(mat[i]);
+
+    //         map.put(i, soldiers);
+    //     }
+
+    //     Integer[] rows = new Integer[m];
+
+    //     for (int i = 0; i < m; i++) {
+    //         rows[i] = i;
+    //     }
+
+    //     Arrays.sort(rows, (a, b) -> {
+    //         if (map.get(a).equals(map.get(b))) {
+    //             return a - b;
+    //         }
+    //         return map.get(a) - map.get(b);
+    //     });
+
+    //     int[] ans = new int[k];
+
+    //     for (int i = 0; i < k; i++) {
+    //         ans[i] = rows[i];
+    //     }
+    //     return ans;
+    // }
+    // private int countSoldiers(int[] row) {
+    //     int l = 0;
+    //     int r = row.length - 1;
+
+    //     while (l <= r) {
+    //         int mid = l + (r - l) / 2;
+
+    //         if (row[mid] == 1) {
+    //             l = mid + 1;
+    //         } else {
+    //             r = mid - 1;
+    //         }
+    //     }
+    //     return l;
