@@ -1,0 +1,48 @@
+class Solution {
+    public int minRefuelStops(int target, int startFuel, int[][] stations) {
+        int fuel = startFuel;
+        int position = 0;
+        int stops = 0;
+
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+
+        for (int i = 0; i <= stations.length; i++) {
+
+            int stationPosition;
+            int stationFuel;
+
+            if (i < stations.length) {
+                stationPosition = stations[i][0];
+                stationFuel = stations[i][1];
+            } else {
+                // Final iteration = target
+                stationPosition = target;
+                stationFuel = 0;
+            }
+
+            // Travel to this position
+            int distance = stationPosition - position;
+            fuel -= distance;
+
+            // If we don't have enough fuel, use fuel from previous stations
+            while (fuel < 0) {
+                if (maxHeap.isEmpty()) {
+                    return -1;
+                }
+
+                fuel += maxHeap.poll();
+                stops++;
+            }
+
+            // We successfully reached this position
+            position = stationPosition;
+
+            // Only real stations provide fuel
+            if (i < stations.length) {
+                maxHeap.offer(stationFuel);
+            }
+        }
+
+        return stops;
+    }
+}
