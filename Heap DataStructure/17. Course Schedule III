@@ -1,0 +1,47 @@
+class Solution {
+    public int scheduleCourse(int[][] courses) {
+        int n = courses.length;
+
+        boolean[] used = new boolean[n];
+
+        int daysUsed = 0;
+        int coursesTaken = 0;
+
+        for (int count = 0; count < n; count++) {
+
+            int minLastDay = Integer.MAX_VALUE;
+            int selectedIndex = -1;
+
+            // Find the unused course with minimum lastDay
+            for (int i = 0; i < n; i++) {
+
+                if (!used[i] && courses[i][1] < minLastDay) {
+                    minLastDay = courses[i][1];
+                    selectedIndex = i;
+                }
+            }
+
+            // No unused course remains
+            if (selectedIndex == -1) {
+                break;
+            }
+
+            int duration = courses[selectedIndex][0];
+            int lastDay = courses[selectedIndex][1];
+
+            // Check whether we can complete this course on time
+            if (daysUsed + duration <= lastDay) {
+                daysUsed += duration;
+                coursesTaken++;
+                used[selectedIndex] = true;
+            } else {
+                // We cannot take this course.
+                // Marking it used would be dangerous because
+                // another course might still be possible.
+                break;
+            }
+        }
+
+        return coursesTaken;
+    }
+}
