@@ -1,0 +1,152 @@
+class Solution {
+
+    PriorityQueue<Integer> leftMaxHeap =
+        new PriorityQueue<>(Collections.reverseOrder());
+
+    PriorityQueue<Integer> rightMinHeap =
+        new PriorityQueue<>();
+
+    HashMap<Integer, Integer> delayed = new HashMap<>();
+
+    int leftSize = 0;   // valid elements in left heap
+    int rightSize = 0;  // valid elements in right heap
+
+    public double[] medianSlidingWindow(int[] nums, int k) {
+
+        int n = nums.length;
+
+        double[] ans = new double[n - k + 1];
+
+        int left = 0;
+        int right = 0;
+        int index = 0;
+
+        while (right < n) {
+
+            // -------------------------
+            // ADD nums[right]
+            // -------------------------
+            int num = nums[right];
+
+            if (leftMaxHeap.isEmpty() || num <= leftMaxHeap.peek()) {
+                leftMaxHeap.offer(num);
+                leftSize++;
+            } else {
+                rightMinHeap.offer(num);
+                rightSize++;
+            }
+
+            right++;
+
+            // Balance heaps
+            balance();
+
+            // -------------------------
+            // WINDOW SIZE = k
+            // -------------------------
+            if (right - left == k) {
+
+                // Remove stale elements before getting median
+                prune(leftMaxHeap);
+                prune(rightMinHeap);
+
+                // -------------------------
+                // FIND MEDIAN
+                // -------------------------
+                if (k % 2 == 0) {
+
+                    ans[index++] =
+                        ((double) leftMaxHeap.peek()
+                        + rightMinHeap.peek()) / 2.0;
+
+                } else {
+
+                    ans[index++] = leftMaxHeap.peek();
+                }
+
+                // -------------------------
+                // REMOVE nums[left]
+                // -------------------------
+                int remove = nums[left];
+
+                delayed.put(
+                    remove,
+                    delayed.getOrDefault(remove, 0) + 1
+                );
+
+                // Decide which heap logically loses this number
+                if (remove <= leftMaxHeap.peek()) {
+                    leftSize--;
+                } else {
+                    rightSize--;
+                }
+
+                left++;
+
+                // Remove stale elements from heap tops
+                prune(leftMaxHeap);
+                prune(rightMinHeap);
+
+                // Balance after removal
+                balance();
+            }
+        }
+
+        return ans;
+    }
+
+
+    // --------------------------------
+    // BALANCE THE TWO HEAPS
+    // --------------------------------
+    private void balance() {
+
+        // left can have at most one more element
+        if (leftSize > rightSize + 1) {
+
+            rightMinHeap.offer(leftMaxHeap.poll());
+
+            leftSize--;
+            rightSize++;
+
+            prune(leftMaxHeap);
+
+        } else if (leftSize < rightSize) {
+
+            leftMaxHeap.offer(rightMinHeap.poll());
+
+            rightSize--;
+            leftSize++;
+
+            prune(rightMinHeap);
+        }
+    }
+
+
+    // --------------------------------
+    // LAZY DELETE
+    // --------------------------------
+    private void prune(PriorityQueue<Integer> heap) {
+
+        while (!heap.isEmpty()) {
+
+            int num = heap.peek();
+
+            if (delayed.containsKey(num)) {
+
+                heap.poll();
+
+                int count = delayed.get(num);
+
+                if (count == 1) {
+                    delayed.remove(num);
+                } else {
+                    delayed.put(num, count - 1);
+                }
+
+            } else {
+                break;
+            }
+        }
+    }
+}
