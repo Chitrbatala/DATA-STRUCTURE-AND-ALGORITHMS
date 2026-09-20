@@ -1,0 +1,72 @@
+class Solution {
+    int minCost(int[] height) {
+       int n = height.length;
+       
+       int[] dp = new int[n];
+       
+       dp[n - 1] = 0;
+       
+       
+       for (int i = n - 2; i >= 0; i--) {
+           int jumpOne = Math.abs(height[i] - height[i + 1]) + dp[i + 1];
+           
+           int jumpTwo = Integer.MAX_VALUE;
+           
+           if (i + 2 < n) {
+               jumpTwo = Math.abs(height[i] - height[i + 2]) + dp[i + 2];
+           }
+           
+           dp[i] = Math.min(jumpOne, jumpTwo);
+       }
+       
+       return dp[0];
+    }
+}
+
+
+
+    // int[] dp = new int[height.length];
+       
+    //   Arrays.fill(dp, -1);
+    //   return solve(0, height, dp);
+    // }
+    
+    // private int solve(int i, int[] height, int[] dp) {
+    //     if (i == height.length - 1) {
+    //         return 0;
+    //     }
+        
+    //     if (dp[i] != -1) {
+    //         return dp[i];
+    //     }
+        
+    //     int jumpOne = Math.abs(height[i] - height[i + 1]) + solve(i + 1, height, dp);
+        
+    //     int jumpTwo = Integer.MAX_VALUE;
+        
+    //     if (i + 2 < height.length) {
+    //         jumpTwo = Math.abs(height[i] - height[i + 2]) + solve(i + 2, height, dp);
+    //     }
+        
+    //     dp[i] = Math.min(jumpOne, jumpTwo);
+        
+    //     return dp[i];
+
+
+    // return solve(0, height);
+    // }
+    
+    // private int solve(int i, int[] height) {
+    //     if (i == height.length - 1) {
+    //         return 0;
+    //     }
+        
+    //     int jumpOne = Math.abs(height[i] - height[i + 1]) + solve(i + 1, height);
+        
+    //     int jumpTwo = Integer.MAX_VALUE;
+        
+    //     if (i + 2 < height.length) {
+    //         jumpTwo = Math.abs(height[i] - height[i + 2]) + solve(i + 2, height);
+    //     }
+        
+    //     return Math.min(jumpOne, jumpTwo);
