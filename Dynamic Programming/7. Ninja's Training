@@ -1,0 +1,97 @@
+class Solution {
+
+    public int maximumPoints(int mat[][]) {
+        int n = mat.length;
+        int[][] dp = new int[n + 1][4];
+
+        for (int day = n - 1; day >= 0; day--) {
+
+            for (int last = 0; last < 4; last++) {
+
+                int maxPoints = 0;
+
+                for (int activity = 0; activity < 3; activity++) {
+
+                    if (activity != last) {
+
+                        int points = mat[day][activity]
+                                   + dp[day + 1][activity];
+
+                        maxPoints = Math.max(maxPoints, points);
+                    }
+                }
+
+                dp[day][last] = maxPoints;
+            }
+        }
+
+        return dp[0][3];
+    }
+}
+
+    // return solve(0, 3, mat);
+    // }
+    // private int solve(int day, int last, int[][] mat) {
+    //     if (day == mat.length) {
+    //         return 0;
+    //     }
+        
+    //     int maxPoints = 0;
+        
+    //     for (int i = 0; i < 3; i++) {
+            
+    //         if (i != last) {
+    //             int current = mat[day][i] + solve(day + 1, i, mat);
+    //             maxPoints = Math.max(current, maxPoints);
+    //         }
+    //     }
+        
+    //     return maxPoints;
+    
+    // int n = mat.length;
+    //     int[][] dp = new int[n][4];
+
+    //     for (int[] row : dp) {
+    //         Arrays.fill(row, -1);
+    //     }
+
+    //     return solve(0, 3, mat, dp);
+    // }
+
+    // static int solve(int day, int last, int mat[][], int dp[][]) {
+
+    //     if (day == mat.length) {
+    //         return 0;
+    //     }
+
+    //     if (dp[day][last] != -1) {
+    //         return dp[day][last];
+    //     }
+
+    //     int maxPoints = 0;
+
+    //     for (int activity = 0; activity < 3; activity++) {
+
+    //         if (activity != last) {
+
+    //             int points = mat[day][activity]
+    //                       + solve(day + 1, activity, mat, dp);
+
+    //             maxPoints = Math.max(maxPoints, points);
+    //         }
+    //     }
+
+    //     dp[day][last] = maxPoints;
+
+    //     return dp[day][last];
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
