@@ -1,0 +1,32 @@
+class Solution {
+    static List<Integer> firstNegInt(int arr[], int k) {
+        int n = arr.length;
+        
+        Queue<Integer> q = new LinkedList<>();
+        List<Integer> res = new ArrayList<>();
+        
+        int i = 0;
+        int j = 0;
+        
+        while (j < n) {
+            if (arr[j] < 0) {
+                q.add(j);
+            }
+            
+            if (j - i + 1 == k) {
+                if (q.isEmpty()) {
+                    res.add(0);
+                } else {
+                    res.add(arr[q.peek()]);
+                }
+                
+                if (!q.isEmpty() && q.peek() == i) {
+                    q.poll();
+                }
+                i++;
+            }
+            j++;
+        }
+        return res;
+    }
+}
