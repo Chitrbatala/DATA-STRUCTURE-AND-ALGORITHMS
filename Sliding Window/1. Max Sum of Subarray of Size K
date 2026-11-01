@@ -1,22 +1,33 @@
 class Solution {
-    public int maxSubarraySum(int[] arr, int k) {
-        // Code here
-        int n = arr.length;
-        
-        int windowSum = 0;
-        
+    public double findMaxAverage(int[] nums, int k) {
+        int n = nums.length;
+
+        int sum = 0;
         for (int i = 0; i < k; i++) {
-            windowSum += arr[i];
+            sum += nums[i];
         }
-        
-        int maxSum = windowSum;
-        
-        for (int right = k; right < arr.length; right++) {
-            windowSum += arr[right];
-            windowSum -= arr[right - k];
-            
-            maxSum = Math.max(windowSum, maxSum);
+
+        int maxSum = sum;
+
+        for (int i = k; i < n; i++) {
+            sum = sum - nums[i - k] + nums[i];
+            maxSum = Math.max(sum, maxSum);
         }
-        return maxSum;
+        return (double) maxSum / k;
     }
 }
+
+
+// Brute Force 
+//         int n = nums.length;
+//         double maxAvg = Double.NEGATIVE_INFINITY;
+
+//         for (int i = 0; i <= n - k; i++) {
+//             int sum = 0;
+//             for (int j = i; j < i + k; j++) {
+//                 sum += nums[j];
+//             }
+//             double avg = (double) sum / k;
+//             maxAvg = Math.max(avg, maxAvg);
+//         }
+//         return maxAvg;
