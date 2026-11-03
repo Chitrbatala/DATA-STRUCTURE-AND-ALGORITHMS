@@ -1,0 +1,29 @@
+class Solution {
+    public int longestUniqueSubstr(String s) {
+        // code here
+        int n = s.length();
+        int l = 0;
+        int ans = 0;
+        
+        Map<Character, Integer> map = new HashMap<>();
+        
+        for (int r = l; r < n; r++) {
+            char ch = s.charAt(r);
+            
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+            
+            while (map.get(ch) > 1) {
+                char leftChar = s.charAt(l);
+                map.put(leftChar, map.get(leftChar) - 1);
+                
+                if (map.get(leftChar) == 0) {
+                    map.remove(leftChar);
+                }
+                l++;
+            }
+            ans = Math.max(ans, r - l + 1);
+        }
+        
+        return ans;
+    }
+}
