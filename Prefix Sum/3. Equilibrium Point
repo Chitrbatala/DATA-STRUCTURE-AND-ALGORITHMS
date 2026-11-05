@@ -1,0 +1,42 @@
+class Solution {
+    public static int findEquilibrium(int arr[]) {
+        int n = arr.length;
+        
+        int totalSum = 0;
+        for (int i = 0; i < n; i++) {
+            totalSum += arr[i];
+        }
+        
+        int leftSum = 0;
+        for (int i = 0; i < n; i++) {
+            if (leftSum == totalSum - leftSum - arr[i]) {
+                return i;
+            }
+            leftSum += arr[i];
+        }
+        
+        return -1;
+    }
+}
+
+
+        // int n = arr.length;
+        
+        // for (int i = 0; i < n; i++) {
+        //     int ls = 0;
+        //     int rs = 0;
+            
+        //     for (int j = 0; j < i; j++) {
+        //         ls += arr[j];
+        //     }
+            
+        //     for (int j = i + 1; j < n; j++) {
+        //         rs += arr[j];
+        //     }
+            
+        //     if (ls == rs) {
+        //         return i;
+        //     }
+        // }
+        
+        // return -1;
