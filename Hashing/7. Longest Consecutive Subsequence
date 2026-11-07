@@ -1,0 +1,53 @@
+class Solution {
+    public int longestConsecutive(int[] arr) {
+        HashSet<Integer> set = new HashSet<>();
+        
+        for (int num : arr) {
+            set.add(num);
+        }
+        
+        int maxCount = 0;
+        
+        for (int num : set) {
+            if (!set.contains(num - 1)) {
+                int curr = num;
+                int count = 1;
+                
+                while (set.contains(curr + 1)) {
+                    curr++;
+                    count++;
+                }
+                
+                maxCount = Math.max(count, maxCount);
+            }
+        }
+        return maxCount;
+    }
+}
+
+        // int n = arr.length;
+        
+        // int maxCount = 0;
+        
+        // for (int i = 0; i < n; i++) {
+        //     int curr = arr[i];
+        //     int count = 1;
+            
+        //     while (true) {
+        //         boolean found = false;
+                
+        //         for (int j = 0; j < n; j++) {
+        //             if (arr[j] == curr + 1) {
+        //                 curr++;
+        //                 count++;
+        //                 found = true;
+        //                 break;
+        //             }
+        //         }
+        //         if (!found) {
+        //             break;
+        //         }
+        //     }
+        //     maxCount = Math.max(count, maxCount);
+        // }
+        // return maxCount;
