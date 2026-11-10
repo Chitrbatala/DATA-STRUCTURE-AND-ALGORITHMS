@@ -1,71 +1,119 @@
 class Solution {
     public int minDays(int[] bloomDay, int m, int k) {
-        if ((long)m * k > bloomDay.length) {
+        int n = bloomDay.length;
+
+        if ((long) m * k > n) {
             return -1;
         }
 
-        int low = minimum(bloomDay);
-        int high = maximum(bloomDay);
+        int start = minimum(bloomDay);
+        int end = maximum(bloomDay);
 
         int ans = -1;
 
-        while (low <= high) {
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
 
-            int mid = low + (high - low) / 2;
-
-            int bouquets = possibleBouquets(bloomDay, k, mid);
-
-            if (bouquets >= m) {
+            if (days(bloomDay, mid, k) >= m) {
                 ans = mid;
-                high = mid - 1;
+                end = mid - 1;
             } else {
-                low = mid + 1;
+                start = mid + 1;
             }
         }
-
         return ans;
     }
-
     private int minimum(int[] bloomDay) {
+        int n = bloomDay.length;
 
-        int min = bloomDay[0];
+        int min = Integer.MAX_VALUE;
 
-        for (int i = 0; i < bloomDay.length; i++) {
+        for (int i = 0; i < n; i++) {
             min = Math.min(min, bloomDay[i]);
         }
-
         return min;
     }
-
     private int maximum(int[] bloomDay) {
+        int n = bloomDay.length;
 
-        int max = bloomDay[0];
+        int max = Integer.MIN_VALUE;
 
-        for (int i = 0; i < bloomDay.length; i++) {
+        for (int i = 0; i < n; i++) {
             max = Math.max(max, bloomDay[i]);
         }
-
         return max;
     }
-    private int possibleBouquets(int[] bloomDay, int k, int limit) {
+    private int days(int[] bloomDay, int mid, int k) {
+        int n = bloomDay.length;
 
         int count = 0;
         int consecutive = 0;
 
-        for (int i = 0; i < bloomDay.length; i++) {
-
-            if (bloomDay[i] <= limit) {
+        for (int i = 0; i < n; i++) {
+            if (bloomDay[i] <= mid) {
                 consecutive++;
+                
+                if (consecutive == k) {
+                    count++;
+                    consecutive = 0;
+                }
             } else {
                 consecutive = 0;
             }
-
-            if (consecutive == k) {
-                count++;
-                consecutive = 0;
-            }
         }
-
         return count;
     }
 }
+
+
+//         int n = bloomDay.length;
+
+//         if ((long) m * k > n) {
+//             return -1;
+//         }
+
+//         int start = minimum(bloomDay);
+//         int end = maximum(bloomDay);
+
+//         for (int day = start; day <= end; day++) {
+//             int consecutive = 0;
+//             int count = 0;
+
+//             for (int i = 0; i < n; i++) {
+//                 if (day >= bloomDay[i]) {
+//                     consecutive++;
+
+//                     if (consecutive == k) {
+//                         count++;
+//                         consecutive = 0;
+//                     }
+//                 } else {
+//                     consecutive = 0;
+//                 }
+//             }
+
+//             if (count >= m) {
+//                 return day;
+//             }
+//         }
+//         return -1;
+//     }
+//     private int minimum(int[] bloomDay) {
+//         int n = bloomDay.length;
+
+//         int min = Integer.MAX_VALUE;
+
+//         for (int i = 0; i < n; i++) {
+//             min = Math.min(min, bloomDay[i]);
+//         }
+//         return min;
+//     }
+//     private int maximum(int[] bloomDay) {
+//         int n = bloomDay.length;
+
+//         int max = Integer.MIN_VALUE;
+
+//         for (int i = 0; i < n; i++) {
+//             max = Math.max(max, bloomDay[i]);
+//         }
+//         return max;
