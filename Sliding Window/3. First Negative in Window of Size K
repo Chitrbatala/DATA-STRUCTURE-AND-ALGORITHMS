@@ -3,9 +3,9 @@ class Solution {
         int n = arr.length;
         
         Queue<Integer> q = new LinkedList<>();
-        List<Integer> res = new ArrayList<>();
+        List<Integer> ans = new ArrayList<>();
         
-        int i = 0;
+        int i = 0; 
         int j = 0;
         
         while (j < n) {
@@ -15,9 +15,9 @@ class Solution {
             
             if (j - i + 1 == k) {
                 if (q.isEmpty()) {
-                    res.add(0);
+                    ans.add(0);
                 } else {
-                    res.add(arr[q.peek()]);
+                    ans.add(arr[q.peek()]);
                 }
                 
                 if (!q.isEmpty() && q.peek() == i) {
@@ -27,6 +27,22 @@ class Solution {
             }
             j++;
         }
-        return res;
+        return ans;
     }
 }
+
+        // code here
+        // int n = arr.length;
+        // List<Integer> ans = new ArrayList<>();
+
+        // for (int i = 0; i <= n - k; i++) {
+        //     int firstNegative = 0;
+        //     for (int j = i; j < k + i; j++) {
+        //         if (arr[j] < 0) {
+        //             firstNegative = arr[j];
+        //             break;
+        //         } 
+        //     }
+        //     ans.add(firstNegative);
+        // }
+        // return ans;
