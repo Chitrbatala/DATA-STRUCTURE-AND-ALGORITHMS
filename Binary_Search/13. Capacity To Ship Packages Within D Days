@@ -1,99 +1,96 @@
 class Solution {
     public int shipWithinDays(int[] weights, int days) {
-        int low = maximum(weights);
-        int high = summation(weights);
-
-        if (days == 1) return high;
+        int n = weights.length;
+        int l = maximum(weights);
+        int h = summation(weights);
 
         int ans = -1;
 
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            int requiredDays = days(weights, mid);
+        while (l <= h) {
+            int mid = l + (h - l) / 2;
 
-            if (requiredDays <= days) {
+            if (countDays(weights, mid) <= days) {
                 ans = mid;
-                high = mid - 1;
+                h = mid - 1;
             } else {
-                low = mid + 1;
+                l = mid + 1;
             }
         }
         return ans;
     }
     private int maximum(int[] weights) {
-        int max = weights[0];
+        int max = Integer.MIN_VALUE;
+
         for (int i = 0; i < weights.length; i++) {
-            max = Math.max(weights[i], max);
+            max = Math.max(max, weights[i]);
         }
         return max;
     }
     private int summation(int[] weights) {
         int sum = 0;
+
         for (int i = 0; i < weights.length; i++) {
             sum += weights[i];
         }
+
         return sum;
     }
-    private int days(int[] weights, int limit) {
-        int days = 1;
-        int load = 0;
+    private int countDays(int[] weights, int mid) {
+        int n = weights.length;
 
-        for (int i = 0; i < weights.length; i++) {
-            if (load + weights[i] <= limit) {
-                load += weights[i];
+        int sum = 0;
+        int count = 1;
+
+        for (int i = 0; i < n; i++) {
+            if (sum + weights[i] <= mid) {
+                sum += weights[i];
             } else {
-                days++;
-                load = weights[i];
+                count++;
+                sum = weights[i];
             }
         }
-        return days;
+        return count;
     }
 }
 
 
 
-// class Solution {
-//     public int shipWithinDays(int[] weights, int days) {
-//         int maxi = maximum(weights);
-//         int sumi = summation(weights);
 
-//         for (int cap = maxi; cap <= sumi; cap++) {
-//             int daysRequired = Days(weights, cap);
-//             if (daysRequired <= days) {
-//                 return cap;
-//             }
-//         }
-//         return -1;
-//     }
-//     private int Days(int[] weights, int capacity) {
-//         int days = 1;
-//         int load = 0;
+    //     int n = weights.length;
+    //     int start = maximum(weights);
+    //     int end = summation(weights);
 
-//         for (int i = 0; i < weights.length; i++) {
-//             if (load + weights[i] > capacity) {
-//                 days = days + 1;
-//                 load = weights[i];
-//             } else {
-//                 load += weights[i];
-//             }
-//         }
-//         return days;
-//     }
-//     private int maximum(int[] weights) {
-//         int max = Integer.MIN_VALUE;
+    //     for (int cap = start; cap <= end; cap++) {
+    //         int count = 1;
+    //         int sum = 0;
 
-//         for (int i = 0; i < weights.length; i++) {
-//             if (weights[i] > max) {
-//                 max = weights[i];
-//             }
-//         }
-//         return max;
-//     }
-//     private int summation(int[] weights) {
-//         int sum = 0;
-//         for (int i = 0; i < weights.length; i++) {
-//             sum += weights[i];
-//         }
-//         return sum;
-//     }
-// }
+    //         for (int i = 0; i < n; i++) {
+    //             if (sum + weights[i] <= cap) {
+    //                 sum += weights[i];
+    //             } else {
+    //                 count++;
+    //                 sum = weights[i];
+    //             }
+    //         }
+    //         if (count <= days) {
+    //             return cap;
+    //         }
+    //     }
+    //     return -1;
+    // }
+    // private int maximum(int[] weights) {
+    //     int max = Integer.MIN_VALUE;
+
+    //     for (int i = 0; i < weights.length; i++) {
+    //         max = Math.max(max, weights[i]);
+    //     }
+    //     return max;
+    // }
+    // private int summation(int[] weights) {
+    //     int sum = 0;
+
+    //     for (int i = 0; i < weights.length; i++) {
+    //         sum += weights[i];
+    //     }
+
+    //     return sum;
