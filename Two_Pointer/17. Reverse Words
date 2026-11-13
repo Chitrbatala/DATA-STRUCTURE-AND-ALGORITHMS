@@ -1,0 +1,52 @@
+
+class Solution {
+    public String reverseWords(String s) {
+        StringBuilder sb = new StringBuilder();
+
+        int right = s.length() - 1;
+
+        while (right >= 0) {
+
+            if (s.charAt(right) == '.') {
+                right--;
+                continue;
+            }
+
+            int left = right;
+
+            while (left >= 0 && s.charAt(left) != '.') {
+                left--;
+            }
+
+            if (sb.length() > 0) {
+                sb.append(".");
+            }
+
+            sb.append(s.substring(left + 1, right + 1));
+
+            right = left - 1;
+        }
+
+        return sb.toString();
+    }
+}
+
+        // String[] words = s.split("\\.", -1);
+
+        // StringBuilder sb = new StringBuilder();
+
+        // for (int i = words.length - 1; i >= 0; i--) {
+            
+        //     if (words[i].isEmpty()) {
+        //         continue;
+        //     }
+
+
+        //     if (sb.length() > 0) {
+        //         sb.append(".");
+        //     }
+            
+        //     sb.append(words[i]);
+        // }
+
+        // return sb.toString();
