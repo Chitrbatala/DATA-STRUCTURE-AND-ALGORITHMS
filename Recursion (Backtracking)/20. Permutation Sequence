@@ -1,0 +1,25 @@
+class Solution {
+    public String getPermutation(int n, int k) {
+        List<String> ans = new ArrayList<>();
+        boolean[] visited = new boolean[n + 1];
+        backtrack(n, visited, new StringBuilder(), ans);
+        return ans.get(k - 1);
+    }
+    private void backtrack(int n, boolean[] visited, StringBuilder curr, List<String> ans) {
+        if (curr.length() == n) {
+            ans.add(curr.toString());
+            return;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            if (!visited[i]) {
+                curr.append(i);
+                visited[i] = true;
+
+                backtrack(n, visited, curr, ans);
+                curr.deleteCharAt(curr.length() - 1);
+                visited[i] = false;
+            }
+        }
+    }
+}
