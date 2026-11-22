@@ -1,0 +1,19 @@
+class Solution {
+    int missingNum(int arr[]) {
+        // code here
+        int n = arr.length;
+        int size = arr.length + 1;
+        
+        int originalSum = 0;
+        for (int i = 1; i <= size; i++) {
+            originalSum += i;
+        }
+        
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += arr[i];
+        }
+        
+        return originalSum - sum;
+    }
+}
