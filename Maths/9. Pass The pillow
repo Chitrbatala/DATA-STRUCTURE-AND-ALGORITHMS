@@ -1,0 +1,16 @@
+class Solution {
+    public int passThePillow(int n, int time) {
+        int hold = 1;
+        int dir = 1;
+
+        while (time != 0) {
+            hold += dir;
+            time--;
+
+            if (hold == n || hold == 1) {
+                dir = -dir;
+            }
+        }
+        return hold;
+    }
+}
