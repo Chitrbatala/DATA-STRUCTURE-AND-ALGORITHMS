@@ -1,16 +1,14 @@
 class Solution {
     public int rob(int[] nums) {
         int n = nums.length;
-
         int[] dp = new int[n + 2];
 
-        dp[n] = 0;
         dp[n + 1] = 0;
+        dp[n] = 0;
 
         for (int i = n - 1; i >= 0; i--) {
             int rob = nums[i] + dp[i + 2];
             int skip = dp[i + 1];
-
             dp[i] = Math.max(rob, skip);
         }
 
@@ -18,15 +16,15 @@ class Solution {
     }
 }
 
-    // int n = nums.length;
-    //     int[] dp = new int[n];
 
+    //     int n = nums.length;
+    //     int[] dp = new int[n + 1];
     //     Arrays.fill(dp, -1);
-    //     return solve(nums, dp, 0);
+    //     return solve(0, nums, dp);
     // }
-
-    // private int solve(int[] nums, int[] dp, int i) {
-    //     if (i >= nums.length) {
+    // private int solve(int i, int[] nums, int[] dp) {
+    //     int n = nums.length;
+    //     if (i >= n) {
     //         return 0;
     //     }
 
@@ -34,9 +32,21 @@ class Solution {
     //         return dp[i];
     //     }
 
-    //     int rob = nums[i] + solve(nums, dp, i + 2);
-    //     int skip = solve(nums, dp, i + 1);
+    //     int rob = nums[i] + solve(i + 2, nums, dp);
+    //     int skip = solve(i + 1, nums, dp);
 
     //     dp[i] = Math.max(rob, skip);
-
     //     return dp[i];
+
+
+    //     return solve(0, nums);
+    // }
+    // private int solve(int i, int[] nums) {
+    //     if (i >= nums.length) {
+    //         return 0;
+    //     }
+
+    //     int rob = nums[i] + solve(i + 2, nums);
+    //     int skip = solve(i + 1, nums);
+
+    //     return Math.max(rob, skip);
