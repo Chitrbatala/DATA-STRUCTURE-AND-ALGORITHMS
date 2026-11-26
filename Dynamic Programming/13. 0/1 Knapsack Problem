@@ -1,0 +1,79 @@
+class Solution {
+    public int knapsack(int W, int val[], int wt[]) {
+        int n = val.length;
+        
+        int[][] dp = new int[n][W + 1];
+        
+        for (int w = wt[0]; w <= W; w++) {
+            dp[0][w] = val[0];
+        }
+        
+        for (int i = 1; i < n; i++) {
+            for (int w = 0; w <= W; w++) {
+                int notTake = dp[i - 1][w];
+                
+                int take = Integer.MIN_VALUE;
+                if (wt[i] <= w) {
+                    take = val[i] + dp[i - 1][w - wt[i]];
+                }
+                dp[i][w] = Math.max(take, notTake);
+            }
+        }
+        return dp[n - 1][W];
+    }
+}
+
+    //     int n = val.length;
+    //     int[][] dp = new int[n][W + 1];
+        
+    //     for (int[] row : dp) {
+    //         Arrays.fill(row, -1);
+    //     }
+        
+    //     return solve(n - 1, W, val, wt, dp) ;
+    // }
+    // private int solve(int i, int W, int[] val, int[] wt, int[][] dp) {
+    //     if (i == 0) {
+    //         if (wt[i] <= W) {
+    //             return val[0];
+    //         } else {
+    //             return 0;
+    //         }
+    //     }
+        
+    //     if (dp[i][W] != -1) {
+    //         return dp[i][W];
+    //     }
+        
+    //     int notPick = solve(i - 1, W, val, wt, dp);
+        
+    //     int pick = Integer.MIN_VALUE;
+    //     if (wt[i] <= W) {
+    //         pick = val[i] + solve(i - 1, W - wt[i], val, wt, dp);
+    //     }
+        
+    //     dp[i][W] = Math.max(pick, notPick);
+        
+    //     return dp[i][W];
+
+    //     int n = val.length;
+    //     return solve(n - 1, val, wt, W);
+        
+    // }
+    // private int solve(int i, int[] val, int[] wt, int W) {
+    //     if (i == 0) {
+    //         if (wt[i] <= W) {
+    //             return val[0];
+    //         } else {
+    //             return 0;
+    //         }
+    //     }
+        
+    //     int notPick = solve(i - 1, val, wt, W);
+        
+    //     int pick = Integer.MIN_VALUE;
+    //     if (wt[i] <= W) {
+    //         pick = val [i] + solve(i - 1, val, wt, W - wt[i]);
+    //     }
+        
+    //     return Math.max(pick, notPick);
