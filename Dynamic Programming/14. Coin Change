@@ -1,0 +1,97 @@
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+        int[][] dp = new int[n][amount + 1];
+
+        for (int t = 0; t <= amount; t++) {
+            if (t % coins[0] == 0) {
+                dp[0][t] = t / coins[0];
+            } else {
+                dp[0][t] = Integer.MAX_VALUE;
+            }
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int t = 0; t <= amount; t++) {
+                int notTake = dp[i - 1][t];
+
+                int take = Integer.MAX_VALUE;
+                if (coins[i] <= t) {
+                    int res = dp[i][t - coins[i]];
+
+                    if (res != Integer.MAX_VALUE) {
+                        take = 1 + res;
+                    }
+                }
+                dp[i][t] = Math.min(take, notTake);
+            }
+        }
+        return dp[n - 1][amount] == Integer.MAX_VALUE ? -1 : dp[n - 1][amount];
+    }
+}
+
+    //     int n = coins.length;
+    //     int[][] dp = new int[n][amount + 1];
+
+    //     for (int[] row : dp) {
+    //         Arrays.fill(row, -1);
+    //     }
+
+    //     int ans = solve(n - 1, coins, amount, dp);
+    //     return ans == Integer.MAX_VALUE ? -1 : ans;
+    // }
+    // private int solve(int i, int[] coins, int target, int[][] dp) {
+    //     if (i == 0) {
+    //         if (target % coins[i] == 0) {
+    //             return target / coins[i];
+    //         } else {
+    //             return Integer.MAX_VALUE;
+    //         }
+    //     }
+
+    //     if (dp[i][target] != -1) {
+    //         return dp[i][target];
+    //     }
+
+    //     int notTake = solve(i - 1, coins, target, dp);
+
+    //     int take = Integer.MAX_VALUE;
+    //     if (coins[i] <= target) {
+    //         int res = solve(i, coins, target - coins[i], dp);
+    //         if (res != Integer.MAX_VALUE) {
+    //             take = 1 + res;
+    //         }
+    //     }
+    //     dp[i][target] = Math.min(take, notTake);
+
+    //     return dp[i][target];
+
+    //     int n = coins.length;
+    //     int ans = solve(n - 1, coins, amount);
+
+    //     return ans == Integer.MAX_VALUE ? -1 : ans;
+    // }
+
+    // private int solve(int i, int[] coins, int target) {
+
+    //     if (i == 0) {
+    //         if (target % coins[i] == 0) {
+    //             return target / coins[i];
+    //         } else {
+    //             return Integer.MAX_VALUE;
+    //         }
+    //     }
+
+    //     int notTake = solve(i - 1, coins, target);
+
+    //     int take = Integer.MAX_VALUE;
+
+    //     if (coins[i] <= target) {
+    //         int result = solve(i, coins, target - coins[i]);
+
+    //         if (result != Integer.MAX_VALUE) {
+    //             take = 1 + result;
+    //         }
+    //     }
+
+    //     return Math.min(take, notTake);
