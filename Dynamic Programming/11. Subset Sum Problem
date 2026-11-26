@@ -1,0 +1,80 @@
+
+class Solution {
+    static boolean isSubsetSum(int arr[], int sum) {
+        int n = arr.length;
+
+        boolean[][] dp = new boolean[n + 1][sum + 1];
+
+        // Base case: target = 0
+        for (int i = 0; i <= n; i++) {
+            dp[i][0] = true;
+        }
+
+        // Fill DP table backwards
+        for (int i = n - 1; i >= 0; i--) {
+            for (int target = 1; target <= sum; target++) {
+
+                boolean pick = false;
+
+                if (target >= arr[i]) {
+                    pick = dp[i + 1][target - arr[i]];
+                }
+
+                boolean notPick = dp[i + 1][target];
+
+                dp[i][target] = pick || notPick;
+            }
+        }
+
+        return dp[0][sum];
+    }
+}
+
+
+    //     int n = arr.length;
+    //     int[][] dp = new int[n][sum + 1];
+        
+    //     for (int[] row : dp) {
+    //         Arrays.fill(row, -1);
+    //     }
+        
+    //     return solve(0, sum, arr, dp) == 1;
+    // }
+    // private static int solve(int i, int target, int[] arr, int[][] dp) {
+    //     int n = arr.length;
+        
+    //     if (target == 0) {
+    //         return 1;
+    //     }
+        
+    //     if (target < 0 || i >= n) {
+    //         return 0;
+    //     }
+        
+    //     if (dp[i][target] != -1) {
+    //         return dp[i][target];
+    //     }
+        
+    //     int pick = solve(i + 1, target - arr[i], arr, dp);
+    //     int notPick = solve(i + 1, target, arr, dp);
+        
+    //     dp[i][target] = Math.max(pick, notPick);
+    //     return dp[i][target];
+
+    //     int ans = solve(0, sum, arr);
+    //     return ans == 1;
+    // }
+    // private static int solve(int i, int target, int[] arr) {
+    //     int n = arr.length;
+    //     if (target == 0) {
+    //         return 1;
+    //     }
+        
+    //     if (target < 0 || i >= n) {
+    //         return 0;
+    //     }
+        
+    //     int pick = solve(i + 1, target - arr[i], arr);
+    //     int notPick = solve(i + 1, target, arr);
+        
+    //     return Math.max(pick, notPick);
