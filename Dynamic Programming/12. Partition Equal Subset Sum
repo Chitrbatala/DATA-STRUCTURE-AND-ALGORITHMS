@@ -1,0 +1,101 @@
+class Solution {
+    public boolean canPartition(int[] nums) {
+        int n = nums.length;
+        int sum = 0;
+
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
+        }
+
+        if (sum % 2 != 0) {
+            return false;
+        }
+
+        int target = sum / 2;
+
+        boolean[][] dp = new boolean[n + 1][target + 1];
+
+        for (int i = 0; i < n; i++) {
+            dp[i][0] = true;
+        }
+
+        for (int i = n - 1; i >= 0; i--) {
+            for (int t = 1; t <= target; t++) {
+                boolean notPick = dp[i + 1][t];
+
+                boolean pick = false;
+
+                if (nums[i] <= t) {
+                    pick = dp[i + 1][t - nums[i]];
+                }
+                dp[i][t] = pick || notPick;
+            }
+        }
+        return dp[0][target];
+    }
+}
+
+    //     int n = nums.length;
+    //     int sum = 0;
+
+    //     for (int i = 0; i < n; i++) {
+    //         sum += nums[i];
+    //     }
+
+    //     if (sum % 2 != 0) {
+    //         return false;
+    //     }
+
+    //     int target = sum / 2;
+
+    //     Boolean[][] dp = new Boolean[n][target + 1];
+
+    //     return solve(0, target, nums, dp);
+    // }
+    // private boolean solve(int i, int target, int[] nums, Boolean[][] dp) {
+    //     int n = nums.length;
+    //     if (target == 0) {
+    //         return true;
+    //     }
+
+    //     if (i >= n || target < 0) {
+    //         return false;
+    //     }
+
+    //     if (dp[i][target] != null) {
+    //         return dp[i][target];
+    //     }
+
+    //     boolean pick = solve(i + 1, target - nums[i], nums, dp);
+    //     boolean notPick = solve(i + 1, target, nums, dp);
+
+    //     dp[i][target] = pick || notPick;
+    //     return dp[i][target];
+
+    //    int n = nums.length;
+    //     int sum = 0;
+
+    //     for (int i = 0; i < n; i++) {
+    //         sum += nums[i];
+    //     }
+
+    //     if (sum % 2 != 0) {
+    //         return false;
+    //     }
+
+    //     return solve(0, sum / 2, nums);
+    // }
+    // private boolean solve(int i, int target, int[] nums) {
+    //     int n = nums.length;
+    //     if (target == 0) {
+    //         return true;
+    //     }
+
+    //     if (i >= n || target < 0) {
+    //         return false;
+    //     }
+
+    //     boolean pick = solve(i + 1, target - nums[i], nums);
+    //     boolean notPick = solve(i + 1, target, nums);
+
+    //     return pick || notPick;
