@@ -1,0 +1,26 @@
+class Solution {
+    public int minChairStacks(int[] chair, int H) {
+        int n = chair.length;
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            map.put(chair[i], map.getOrDefault(chair[i], 0) + 1);
+        }
+        int count = 0;
+        int emptySpaces = 0;
+
+        for (int key : map.keySet()) {
+            if (key == 0) continue;
+            int freq = map.get(key);
+            int stacks = (freq + H - 1) / H;
+            count += stacks;
+            emptySpaces += (stacks * H) - freq;
+        }
+
+        int zeroes = map.getOrDefault(0, 0);
+        int remainingZeroes = Math.max(0, zeroes - emptySpaces);
+        count += (remainingZeroes + H - 1) / H;
+
+        return count;
+    }
+}
